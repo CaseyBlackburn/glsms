@@ -1,0 +1,7 @@
+/.secrets/
+/.gocache/
+/.gopath/
+/bin/
+*.exe
+config.json
+.env
