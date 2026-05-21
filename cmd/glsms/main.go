@@ -36,6 +36,13 @@ import (
 	"github.com/CaseyBlackburn/glsms/tui"
 )
 
+// Populated by GoReleaser via -ldflags at release-build time.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
 func newServer(addr string, h http.Handler) *http.Server {
 	return &http.Server{
 		Addr:              addr,
@@ -72,9 +79,13 @@ func run(args []string) error {
 	}
 	cmd, cmdArgs := rest[0], rest[1:]
 
-	// help never needs a connection.
+	// help and version never need a connection.
 	if cmd == "help" || cmd == "-h" || cmd == "--help" {
 		global.Usage()
+		return nil
+	}
+	if cmd == "version" || cmd == "-v" || cmd == "--version" {
+		fmt.Printf("glsms %s (commit %s, built %s)\n", version, commit, date)
 		return nil
 	}
 	if *pass == "" {
@@ -335,6 +346,7 @@ Commands:
   delete -name NAME      delete the message with that storage name
   tui                    interactive terminal UI
   serve  -addr :8080     run the REST API server
+  version                print version and exit
 
 Global flags:
 `)

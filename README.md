@@ -15,11 +15,42 @@ discovered by probing a live X3000 and is what this tool implements.
 | `tui/`       | Interactive terminal UI (Bubble Tea), reuses `glsms` |
 | `cmd/glsms/` | CLI binary — also `serve` (REST) and `tui`           |
 
-## Build
+## Install
+
+Download a prebuilt binary for your OS/arch from the
+[Releases](https://github.com/CaseyBlackburn/glsms/releases) page (Linux,
+macOS, and Windows on `x86_64` and `arm64`), or build from source:
 
 ```powershell
 go build -o bin/glsms.exe ./cmd/glsms
 ```
+
+## Releasing
+
+Releases are produced by GoReleaser via GitHub Actions when a `v*` tag is
+pushed. Use the helper script for your shell — it validates the working tree,
+checks the tag doesn't already exist, runs a build sanity-check, then tags
+and pushes:
+
+```powershell
+./scripts/release.ps1 v0.1.0
+```
+
+```sh
+./scripts/release.sh v0.1.0
+```
+
+Both scripts accept `-Message "..."` / `-m "..."`, `--skip-build`, and
+`--force` (skip confirmations). Or, to do it by hand:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The [`release` workflow](.github/workflows/release.yml) cross-compiles
+binaries, generates `checksums.txt`, and publishes a GitHub Release with the
+archives attached.
 
 ## Configuration
 
