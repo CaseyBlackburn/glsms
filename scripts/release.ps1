@@ -82,7 +82,7 @@ if (-not $SkipBuild) {
 $tagMessage = if ($Message) { $Message } else { "Release $Version" }
 Write-Host ""
 Write-Host "  version: $Version"
-Write-Host "  commit:  $local"
+Write-Host "  commit:  $localHead"
 Write-Host "  branch:  $branch"
 Write-Host "  remote:  $Remote"
 Write-Host "  message: $tagMessage"
