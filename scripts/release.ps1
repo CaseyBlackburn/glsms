@@ -59,9 +59,9 @@ if ($branch -ne "main") {
 
 # 5. Up to date with the remote.
 git fetch --tags $Remote 2>&1 | Out-Null
-$local  = git rev-parse HEAD
-$remote = git rev-parse "$Remote/$branch" 2>$null
-if ($LASTEXITCODE -eq 0 -and $local -ne $remote) {
+$localHead  = git rev-parse HEAD
+$remoteHead = git rev-parse "$Remote/$branch" 2>$null
+if ($LASTEXITCODE -eq 0 -and $localHead -ne $remoteHead) {
     Write-Host "warning: HEAD differs from $Remote/$branch" -ForegroundColor Yellow
     if (-not (Confirm "continue anyway?")) { exit 1 }
 }
@@ -87,7 +87,7 @@ Write-Host "  branch:  $branch"
 Write-Host "  remote:  $Remote"
 Write-Host "  message: $tagMessage"
 Write-Host ""
-if (-not (Confirm "create and push tag $Version?")) { exit 1 }
+if (-not (Confirm "create and push tag ${Version}?")) { exit 1 }
 
 git tag -a $Version -m $tagMessage
 if ($LASTEXITCODE -ne 0) { Fail "git tag failed" }
